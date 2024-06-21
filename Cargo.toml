@@ -19,8 +19,6 @@ unsafe_code = "forbid" # Forbid unsafe code
 
 [lints.clippy]
 enum_glob_use = "deny" # Deny `use Enum::*`
-pedantic = "deny"      # Deny a bunch of stuff
-nursery = "deny"       # Deny another bunch of stuff
 unwrap_used = "deny"   # Deny `.unwrap()`
 
 [profile.release]
