@@ -36,6 +36,11 @@ impl Elevator {
     /// The function should be called `move` but it's a reserved keyword in Rust.
     pub(crate) fn tick(&mut self) {
         if let Some(dir) = self.direction {
+            if self.up_queue.is_empty() && self.down_queue.is_empty() {
+                // remove the direction if there are no more destinations
+                self.direction = None;
+            }
+
             match dir {
                 Direction::Up => {
                     if let Some(dest) = self.up_queue.first() {
@@ -70,6 +75,17 @@ impl Elevator {
                             }
                         }
                     }
+                }
+            }
+        } else {
+            // if we don't have a direction, we should check the queues
+            if let Some(dest) = self.up_queue.first() {
+                if dest > &self.current_floor {
+                    self.direction = Some(Direction::Up);
+                }
+            } else if let Some(dest) = self.down_queue.first() {
+                if dest < &self.current_floor {
+                    self.direction = Some(Direction::Down);
                 }
             }
         }
