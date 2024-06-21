@@ -2,6 +2,9 @@
 name = "elevator-async"
 version = "0.1.0"
 edition = "2021"
+authors = ["Jose Storopoli <jose@storopoli.io>"]
+description = "This is a simple study on how to build an actor-based async parallel elevator system in Rust with tokio."
+license = "AGPL-3.0-only"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

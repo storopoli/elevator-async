@@ -4,6 +4,7 @@ use tokio::sync::mpsc;
 
 use crate::{elevator::Elevator, message::Message, utils::Direction};
 
+/// The elevator control system that manages the elevator's movement.
 pub(crate) async fn elevator_control_system(
     mut rx: mpsc::Receiver<Message>,
     elevator_arc: Arc<Mutex<Elevator>>,
