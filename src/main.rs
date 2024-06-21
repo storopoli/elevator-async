@@ -9,8 +9,8 @@ pub mod request;
 pub mod switch;
 pub mod utils;
 
-use control::elevator_control_system;
-use elevator::{move_elevator, Elevator};
+use control::{elevator_control_system, move_elevator};
+use elevator::Elevator;
 use request::handle_request;
 
 #[tokio::main]

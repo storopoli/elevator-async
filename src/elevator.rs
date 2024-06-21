@@ -1,5 +1,3 @@
-use std::sync::{Arc, Mutex};
-
 use crate::utils::Direction;
 
 /// An elevator that can move up and down between floors.
@@ -98,24 +96,15 @@ impl Elevator {
             Direction::Down => self.down_queue.push(floor),
         }
         match direction {
+            // sort the vector ascending
             Direction::Up => self.up_queue.sort_unstable(),
-            Direction::Down => self.down_queue.sort_unstable(),
+            // sort the vector descending
+            Direction::Down => self
+                .down_queue
+                .sort_unstable_by_key(|k| std::cmp::Reverse(*k)),
         }
         if self.direction.is_none() {
             self.direction = Some(direction);
         }
-    }
-}
-
-pub(crate) async fn move_elevator(elevator_arc: Arc<Mutex<Elevator>>) {
-    loop {
-        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-        let mut elevator = elevator_arc.lock().expect("Mutex poisoned");
-        elevator.tick();
-
-        #[cfg(debug_assertions)]
-        println!("Elevator state: {elevator:?}");
-
-        drop(elevator); // release the guard
     }
 }

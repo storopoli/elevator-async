@@ -29,3 +29,16 @@ pub(crate) async fn elevator_control_system(
         }
     }
 }
+
+pub(crate) async fn move_elevator(elevator_arc: Arc<Mutex<Elevator>>) {
+    loop {
+        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+        let mut elevator = elevator_arc.lock().expect("Mutex poisoned");
+        elevator.tick();
+
+        #[cfg(debug_assertions)]
+        println!("Elevator state: {elevator:?}");
+
+        drop(elevator); // release the guard
+    }
+}
