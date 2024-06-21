@@ -10,5 +10,6 @@
         "vadimcn.vscode-lldb"
       ]
     }
-  }
+  },
+  "forwardPorts": [3000]
 }

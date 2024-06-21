@@ -1,7 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 use crate::utils::Direction;
 
 /// Switch that the user activate on the floor
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub(crate) struct FloorSwitch {
     /// Current floor
     pub(crate) floor: u8,
@@ -11,7 +13,7 @@ pub(crate) struct FloorSwitch {
 }
 
 /// Switch that the user activate inside the elevator
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub(crate) struct ElevatorSwitch {
     /// Destination floor
     pub(crate) destination: u8,
