@@ -39,28 +39,36 @@ impl Elevator {
             match dir {
                 Direction::Up => {
                     if let Some(dest) = self.up_queue.first() {
-                        if *dest > self.current_floor {
-                            self.current_floor += 1;
-                            println!("Elevator moving up to floor {}", self.current_floor);
-                        } else if *dest == self.current_floor {
-                            self.up_queue.remove(0);
-                            println!("Elevator stopped at floor {}", self.current_floor);
+                        match dest.cmp(&self.current_floor) {
+                            std::cmp::Ordering::Greater => {
+                                self.current_floor += 1;
+                                println!("Elevator moving up to floor {}", self.current_floor);
+                            }
+                            std::cmp::Ordering::Equal => {
+                                self.up_queue.remove(0);
+                                println!("Elevator stopped at floor {}", self.current_floor);
+                            }
+                            std::cmp::Ordering::Less => {
+                                self.direction = None;
+                            }
                         }
-                    } else {
-                        self.direction = None;
                     }
                 }
                 Direction::Down => {
                     if let Some(dest) = self.down_queue.first() {
-                        if *dest < self.current_floor {
-                            self.current_floor -= 1;
-                            println!("Elevator moving down to floor {}", self.current_floor);
-                        } else if *dest == self.current_floor {
-                            self.down_queue.remove(0);
-                            println!("Elevator stopped at floor {}", self.current_floor);
+                        match dest.cmp(&self.current_floor) {
+                            std::cmp::Ordering::Less => {
+                                self.current_floor -= 1;
+                                println!("Elevator moving down to floor {}", self.current_floor);
+                            }
+                            std::cmp::Ordering::Equal => {
+                                self.down_queue.remove(0);
+                                println!("Elevator stopped at floor {}", self.current_floor);
+                            }
+                            std::cmp::Ordering::Greater => {
+                                self.direction = None;
+                            }
                         }
-                    } else {
-                        self.direction = None;
                     }
                 }
             }
